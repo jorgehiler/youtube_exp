@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_exp/models/video_model.dart';
 import 'package:youtube_exp/services/api_youtube.dart';
+import 'package:youtube_exp/video_search.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Search'),
     );
   }
 }
@@ -33,15 +33,15 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   List<Video> _video;
 
-   @override
+  @override
   void initState() {
     super.initState();
     _initChannel();
   }
 
   _initChannel() async {
-    List<Video> video = await APIService.instance
-        .fetchSearch(textSearch: 'casa');
+    List<Video> video =
+        await APIService.instance.fetchSearch(textSearch: 'casa');
     setState(() {
       _video = video;
     });
@@ -50,27 +50,36 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounter() {
     setState(() {
       _counter++;
-      _video.forEach((Video element) {print(element.title);
-      print(element.id);
-      print(element.channelTitle);
-      print(element.publishTime);
-      print(element.thumbnailUrl);
-      print(element.shortDescription);
-      print(element.title);});
+      _video.forEach((Video element) {
+        print(element.title);
+        print(element.id);
+        print(element.channelTitle);
+        print(element.publishTime);
+        print(element.thumbnailUrl);
+        print(element.shortDescription);
+        print(element.title);
+      });
     });
   }
 
   Future<void> dummy() async {
-     var channel = await APIService.instance
-        .fetchSearch(textSearch: 'casa');
-        print(channel);    
+    var channel = await APIService.instance.fetchSearch(textSearch: 'casa');
+    print(channel);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Search'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: VideoSearch());
+            },
+          )
+        ],
       ),
       body: Center(
         child: Column(
@@ -90,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), 
+      ),
     );
   }
 }
