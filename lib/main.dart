@@ -36,10 +36,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _initChannel();
+    _initList();
   }
 
-  _initChannel() async {
+  _initList() async {
     List<Video> video =
         await APIService.instance.fetchSearch(textSearch: 'casa');
     setState(() {
@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search'),
+        title: Text('Buscar'),
         actions: [
           IconButton(
             icon: Icon(Icons.search),

@@ -5,7 +5,6 @@ import 'package:youtube_exp/models/video_model.dart';
 import 'package:youtube_exp/utilities/api_key.dart';
 
 class APIService {
-
   APIService._instantiate();
 
   static final APIService instance = APIService._instantiate();
@@ -29,8 +28,6 @@ class APIService {
       HttpHeaders.contentTypeHeader: 'application/json',
     };
     var response = await http.get(uri, headers: headers);
-    //print('Status code');
-    //print(response.statusCode);
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       List<dynamic> videosJson = data['items'];
@@ -44,5 +41,17 @@ class APIService {
     } else {
       throw json.decode(response.body)['error']['message'];
     }
+  }
+
+  Future fetchSuggestion(String q) async {
+    const baseUrl =
+        'http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=';
+    var response = await http.get(baseUrl + q);
+    if (response.statusCode == 200) {
+      List data = json.decode(response.body);
+      List<dynamic> suggestions = data[1];
+      return suggestions;
+    }
+    return [];
   }
 }
