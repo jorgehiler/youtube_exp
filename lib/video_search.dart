@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:youtube_exp/providers/search_youtube.provider.dart';
 import 'package:youtube_exp/services/api_youtube.dart';
 
 class VideoSearch extends SearchDelegate<String> {
@@ -40,6 +42,9 @@ class VideoSearch extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    var searchProvider =
+        Provider.of<SearchYoutubeProvider>(context, listen: false);
+
     //final suggestionList = query.isEmpty ? recent : suggestions;
     return FutureBuilder(
         future: APIService.instance.fetchSuggestion(query),
@@ -53,6 +58,7 @@ class VideoSearch extends SearchDelegate<String> {
                       title: Text(snapshot.data[index]),
                       onTap: () {
                         query = snapshot.data[index];
+                        searchProvider.setTextSearch(query);
                         close(context, null);
                         showResults(context);
                       },

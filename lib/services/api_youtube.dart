@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:youtube_exp/models/video_model.dart';
+import 'package:youtube_exp/models/video.model.dart';
 import 'package:youtube_exp/utilities/api_key.dart';
 
 class APIService {
@@ -47,11 +47,25 @@ class APIService {
     const baseUrl =
         'http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=';
     var response = await http.get(baseUrl + q);
+    print(response.statusCode);
     if (response.statusCode == 200) {
       List data = json.decode(response.body);
       List<dynamic> suggestions = data[1];
       return suggestions;
     }
     return [];
+  }
+
+  //Poner bonita url
+  Future<String> fetchDescriptionComplete(String id) async {
+    var bUrl =
+        'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=$id&fields=items/snippet/title,items/snippet/description&key={$API_KEY}';
+    var response = await http.get(bUrl);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      String description = data['items']['snippet']['description'];
+      return description;
+    }
+    return '';
   }
 }

@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_exp/models/video_model.dart';
-import 'package:youtube_exp/services/api_youtube.dart';
+import 'package:provider/provider.dart';
+import 'package:youtube_exp/providers/search_youtube.provider.dart';
+import 'package:youtube_exp/video_%20carousel.dart';
+import 'package:youtube_exp/video_screen.dart';
 import 'package:youtube_exp/video_search.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => SearchYoutubeProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -30,76 +38,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  List<Video> _video;
-
-  @override
-  void initState() {
-    super.initState();
-    _initList();
-  }
-
-  _initList() async {
-    List<Video> video =
-        await APIService.instance.fetchSearch(textSearch: 'casa');
-    setState(() {
-      _video = video;
-    });
-  }
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-      _video.forEach((Video element) {
-        print(element.title);
-        print(element.id);
-        print(element.channelTitle);
-        print(element.publishTime);
-        print(element.thumbnailUrl);
-        print(element.shortDescription);
-        print(element.title);
-      });
-    });
-  }
-
-  Future<void> dummy() async {
-    var channel = await APIService.instance.fetchSearch(textSearch: 'casa');
-    print(channel);
-  }
+  //List<Video> video =await APIService.instance.fetchSearch(textSearch: 'casa');
 
   @override
   Widget build(BuildContext context) {
+    final search = Provider.of<SearchYoutubeProvider>(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Buscar'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              showSearch(context: context, delegate: VideoSearch());
-            },
-          )
-        ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+        appBar: AppBar(
+          title: Text('Buscar'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                showSearch(context: context, delegate: VideoSearch());
+              },
+            )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-    );
+        body: SafeArea(
+            child: Container(
+          child: ListView(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            children: [
+              Container(height: 120, child: Carousel()),
+              Container(
+                child: VideoScreen(id: 'feQhHStBVLE'),
+                height: 200,
+              ),
+            ],
+          ),
+        )));
   }
 }
