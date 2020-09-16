@@ -6,7 +6,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class VideoScreen extends StatefulWidget {
   final String id;
 
-  VideoScreen({this.id});
+  VideoScreen({Key key, this.id}) : super(key: key);
 
   @override
   _VideoScreenState createState() => _VideoScreenState();
@@ -31,17 +31,16 @@ class _VideoScreenState extends State<VideoScreen> {
   Widget build(BuildContext context) {
     final videoYoutubeProvider = Provider.of<VideoYoutubeProvider>(context);
 
-    setState(() {
-      _controller = YoutubePlayerController(
-        initialVideoId: videoYoutubeProvider.getIdVideo(),
+    print('Desde el build nuevo id ${videoYoutubeProvider.getIdVideo()}');
+    print('Pasado por parametro ${widget.id}');
+    return YoutubePlayer(
+      controller: YoutubePlayerController(
+        initialVideoId: widget.id,
         flags: YoutubePlayerFlags(
           mute: false,
           autoPlay: false,
         ),
-      );
-    });
-    return YoutubePlayer(
-      controller: _controller,
+      ),
       showVideoProgressIndicator: true,
       onReady: () {
         print('Player is ready.');
