@@ -29,18 +29,9 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final videoYoutubeProvider = Provider.of<VideoYoutubeProvider>(context);
-
-    print('Desde el build nuevo id ${videoYoutubeProvider.getIdVideo()}');
     print('Pasado por parametro ${widget.id}');
     return YoutubePlayer(
-      controller: YoutubePlayerController(
-        initialVideoId: widget.id,
-        flags: YoutubePlayerFlags(
-          mute: false,
-          autoPlay: false,
-        ),
-      ),
+      controller: _controller,
       showVideoProgressIndicator: true,
       onReady: () {
         print('Player is ready.');

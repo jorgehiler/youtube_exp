@@ -1,21 +1,46 @@
 import 'package:flutter/cupertino.dart';
 import 'package:youtube_exp/models/video.model.dart';
+import 'package:youtube_exp/services/api_youtube.dart';
 
 class VideoYoutubeProvider with ChangeNotifier {
-  Video currentVideo;
-  String _idVideo = "uLw3FicM6AM";
+  Video _currentVideo = Video(
+      id: '',
+      title: '',
+      shortDescription: '',
+      thumbnailUrl: '',
+      channelTitle: '',
+      publishTime: '');
+  String _idVideo = "uLw3FicM6AM"; //Borrar este
+  String _description = "";
 
-  updateScreen(String idVideo) {
+  updateScreen(Video video) {
     print("Actualizando video en reproducción");
-    print(idVideo);
-    this._idVideo = idVideo;
-    notifyListeners();
+    print(_idVideo);
+    this._currentVideo = video;
+    this._idVideo = _currentVideo.id;
+    this._getDescription(video.id).then((value) {
+      this._description = value;
+      notifyListeners();
+    });
   }
 
-  get idVideo => _idVideo;
-
-  getIdVideo() {
+  String getIdVideo() {
     return _idVideo;
+  }
+
+  Future<String> _getDescription(String id) async {
+    String description = await APIService.instance.fetchDescriptionComplete(id);
+    print('Complete description');
+    print(description);
+    return description;
+  }
+
+  Video getVideo() {
+    return this._currentVideo;
+  }
+
+  String description() {
+    return this._description;
   }
 
   constructor() {}

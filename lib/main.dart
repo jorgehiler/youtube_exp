@@ -69,11 +69,18 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(height: 120, child: Carousel()),
               Consumer<VideoYoutubeProvider>(
                 builder: (_, videoYoutubeProvider, __) => Container(
-                  child: VideoScreen(
-                    id: videoYoutubeProvider.getIdVideo(),
-                    key: UniqueKey(),
+                  child: Column(
+                    children: <Widget>[
+                      VideoScreen(
+                        id: videoYoutubeProvider.getIdVideo(),
+                        key: UniqueKey(),
+                      ),
+                      SizedBox(height: 20),
+                      Text(videoYoutubeProvider.getVideo().title),
+                      SizedBox(height: 20),
+                      Text(videoYoutubeProvider.description())
+                    ],
                   ),
-                  height: 200,
                 ),
               ),
             ],

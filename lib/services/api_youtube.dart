@@ -59,11 +59,13 @@ class APIService {
   //Poner bonita url
   Future<String> fetchDescriptionComplete(String id) async {
     var bUrl =
-        'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=$id&fields=items/snippet/title,items/snippet/description&key={$API_KEY}';
+        'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=$id&fields=items/snippet/title,items/snippet/description&key=$API_KEY';
     var response = await http.get(bUrl);
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      String description = data['items']['snippet']['description'];
+      print('data');
+      print(data);
+      String description = data['items'][0]['snippet']['description'];
       return description;
     }
     return '';
