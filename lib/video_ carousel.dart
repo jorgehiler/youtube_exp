@@ -48,8 +48,8 @@ class Carousel extends StatelessWidget {
     final videoYoutubeProvider =
         Provider.of<VideoYoutubeProvider>(context, listen: false);
 
-    Future<List<Video>> homeCards =
-        APIService.instance.fetchSearch(textSearch: youtubeProvider.textSearch);
+    Future<List<Video>> homeCards = APIService.instance
+        .fetchSearchFake(textSearch: youtubeProvider.textSearch);
     return FutureBuilder<List<Video>>(
       future: homeCards,
       builder: (context, snapshot) {

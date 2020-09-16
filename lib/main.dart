@@ -62,29 +62,80 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         body: SafeArea(
-            child: Container(
-          child: ListView(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            children: [
-              Container(height: 120, child: Carousel()),
-              Consumer<VideoYoutubeProvider>(
-                builder: (_, videoYoutubeProvider, __) => Container(
-                  child: Column(
-                    children: <Widget>[
-                      VideoScreen(
-                        id: videoYoutubeProvider.getIdVideo(),
-                        key: UniqueKey(),
+            child: Column(
+          children: <Widget>[
+            Expanded(
+                child: Container(
+              child: Column(
+                children: [
+                  Container(height: 120, child: Carousel()),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                      child: Consumer<VideoYoutubeProvider>(
+                        builder: (_, videoYoutubeProvider, __) => Container(
+                          child: Column(
+                            children: <Widget>[
+                              VideoScreen(
+                                id: videoYoutubeProvider.getIdVideo(),
+                                key: UniqueKey(),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 5.0, right: 5),
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 5),
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                            videoYoutubeProvider
+                                                .getVideo()
+                                                .title,
+                                            overflow: TextOverflow.ellipsis),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(videoYoutubeProvider
+                                              .getVideo()
+                                              .publishTime)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Divider(
+                                height: 10,
+                                thickness: 0.7,
+                                color: Colors.grey,
+                                indent: 5,
+                                endIndent: 5,
+                              ),
+                              Expanded(
+                                child: Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 5.0,
+                                        right: 5.0,
+                                        top: 2,
+                                        bottom: 5),
+                                    child: Scrollbar(
+                                      child: SingleChildScrollView(
+                                          padding: EdgeInsets.only(right: 20),
+                                          child: Text(videoYoutubeProvider
+                                              .getDescription())),
+                                    )),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      SizedBox(height: 20),
-                      Text(videoYoutubeProvider.getVideo().title),
-                      SizedBox(height: 20),
-                      Text(videoYoutubeProvider.description())
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            ))
+          ],
         )));
   }
 }

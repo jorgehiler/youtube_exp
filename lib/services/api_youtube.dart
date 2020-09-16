@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -69,5 +70,49 @@ class APIService {
       return description;
     }
     return '';
+  }
+
+  Future<List<Video>> fetchSearchFake({String textSearch}) async {
+    var completer = new Completer<List<Video>>();
+    // At some time you need to complete the future:
+
+    List<Video> videos = [
+      new Video(
+          id: 'KzTeWPkUxQs',
+          title:
+              'Flutter Presentación en Español largo largo largo largo largo largo',
+          shortDescription:
+              'Martin Aguinis presenta sobre Flutter en Español durante México Partner Day. Flutter es el kit UI portátil de Google para crear aplicaciones nativas para móvil, ...',
+          thumbnailUrl: "https://i.ytimg.com/vi/KzTeWPkUxQs/default.jpg",
+          channelTitle: 'Flutter',
+          publishTime: '2019-07-04'),
+      new Video(
+          id: 'L3c66Ve20EU',
+          title: 'Flutter Presentación en Español',
+          shortDescription:
+              'Martin Aguinis presenta sobre Flutter en Español durante México Partner Day. Flutter es el kit UI portátil de Google para crear aplicaciones nativas para móvil, ...',
+          thumbnailUrl: "https://i.ytimg.com/vi/cILHRB8Syng/default.jpg",
+          channelTitle: 'Flutter',
+          publishTime: '2019-07-04'),
+      new Video(
+          id: '5Vq-oJEj9Qk',
+          title: 'Flutter Presentación en Español',
+          shortDescription:
+              'Martin Aguinis presenta sobre Flutter en Español durante México Partner Day. Flutter es el kit UI portátil de Google para crear aplicaciones nativas para móvil, ...',
+          thumbnailUrl: "https://i.ytimg.com/vi/I9ceqw5Ny-4/default.jpg",
+          channelTitle: 'Flutter',
+          publishTime: '2019-07-04'),
+      new Video(
+          id: 'I6ypD7qv3Z8',
+          title: 'Flutter Presentación en Español',
+          shortDescription:
+              'Martin Aguinis presenta sobre Flutter en Español durante México Partner Day. Flutter es el kit UI portátil de Google para crear aplicaciones nativas para móvil, ...',
+          thumbnailUrl: "https://i.ytimg.com/vi/I9ceqw5Ny-4/default.jpg",
+          channelTitle: 'Flutter',
+          publishTime: '2019-07-04')
+    ];
+    completer.complete(videos);
+
+    return completer.future;
   }
 }

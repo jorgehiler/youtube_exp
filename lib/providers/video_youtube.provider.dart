@@ -18,10 +18,14 @@ class VideoYoutubeProvider with ChangeNotifier {
     print(_idVideo);
     this._currentVideo = video;
     this._idVideo = _currentVideo.id;
-    this._getDescription(video.id).then((value) {
-      this._description = value;
-      notifyListeners();
-    });
+    // this._getDescription(video.id).then((value) {
+    //   this._description = value;
+    //   notifyListeners();
+    // });
+    //Temporal
+    this._description =
+        'La ciática es un conjunto de síntomas que incluyen dolor causado por la compresión general o irritación de una de las cinco raíces de los nervios espinales de cada nervio ciático o por compresión o irritación de los nervios izquierda o derecha o ambos ciáticos. Los síntomas incluyen dolor de espalda, dolor en la nalga y dolor, entumecimiento o debilidad en diferentes partes de la pierna y el pie. Otros síntomas incluyen un "alfileres y agujas" sensibilidad o sensación de hormigueo y dificultad para mover o controlar la pierna. Típicamente, los síntomas se manifiestan sólo en un lado del cuerpo. El dolor puede irradiarse por debajo de la rodilla, pero no siempre. La ciática es un conjunto de síntomas que incluyen dolor causado por la compresión general o irritación de una de las cinco raíces de los nervios espinales de cada nervio ciático o por compresión o irritación de los nervios izquierda o derecha o ambos ciáticos. Los síntomas incluyen dolor de espalda, dolor en la nalga y dolor, entumecimiento o debilidad en diferentes partes de la pierna y el pie. Otros síntomas incluyen un "alfileres y agujas" sensibilidad o sensación de hormigueo y dificultad para mover o controlar la pierna. Típicamente, los síntomas se manifiestan sólo en un lado del cuerpo. El dolor puede irradiarse por debajo de la rodilla, pero no siempre';
+    notifyListeners();
   }
 
   String getIdVideo() {
@@ -39,7 +43,8 @@ class VideoYoutubeProvider with ChangeNotifier {
     return this._currentVideo;
   }
 
-  String description() {
+  String getDescription() {
+    print(_description);
     return this._description;
   }
 

@@ -6,14 +6,13 @@ class Video {
   final String channelTitle;
   final String publishTime;
 
-  Video({
-    this.id,
-    this.title,
-    this.shortDescription,
-    this.thumbnailUrl,
-    this.channelTitle,
-    this.publishTime
-  });
+  Video(
+      {this.id,
+      this.title,
+      this.shortDescription,
+      this.thumbnailUrl,
+      this.channelTitle,
+      this.publishTime});
 
   factory Video.fromMap(Map<String, dynamic> item) {
     Map<String, dynamic> snippet = item['snippet'];
@@ -23,8 +22,7 @@ class Video {
       shortDescription: snippet['description'],
       thumbnailUrl: snippet['thumbnails']['high']['url'],
       channelTitle: snippet['channelTitle'],
-      publishTime: snippet['publishTime'],
-
+      publishTime: snippet['publishTime'].substring(0, 9),
     );
   }
 }
