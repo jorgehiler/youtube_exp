@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:youtube_exp/providers/video_youtube.provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoScreen extends StatefulWidget {
@@ -20,13 +22,24 @@ class _VideoScreenState extends State<VideoScreen> {
       initialVideoId: widget.id,
       flags: YoutubePlayerFlags(
         mute: false,
-        autoPlay: true,
+        autoPlay: false,
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final videoYoutubeProvider = Provider.of<VideoYoutubeProvider>(context);
+
+    setState(() {
+      _controller = YoutubePlayerController(
+        initialVideoId: videoYoutubeProvider.getIdVideo(),
+        flags: YoutubePlayerFlags(
+          mute: false,
+          autoPlay: false,
+        ),
+      );
+    });
     return YoutubePlayer(
       controller: _controller,
       showVideoProgressIndicator: true,

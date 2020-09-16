@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_exp/providers/search_youtube.provider.dart';
+import 'package:youtube_exp/providers/video_youtube.provider.dart';
 import 'package:youtube_exp/video_%20carousel.dart';
 import 'package:youtube_exp/video_screen.dart';
 import 'package:youtube_exp/video_search.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => SearchYoutubeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => VideoYoutubeProvider()),
+        ChangeNotifierProvider(create: (context) => SearchYoutubeProvider())
+      ],
       child: MyApp(),
     ),
   );
@@ -43,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final search = Provider.of<SearchYoutubeProvider>(context);
+    final videoYoutubeProvider = Provider.of<VideoYoutubeProvider>(context);
 
     return Scaffold(
         appBar: AppBar(
@@ -62,9 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: EdgeInsets.only(left: 20, right: 20),
             children: [
               Container(height: 120, child: Carousel()),
-              Container(
-                child: VideoScreen(id: 'feQhHStBVLE'),
-                height: 200,
+              Consumer<VideoYoutubeProvider>(
+                builder: (_, videoYoutubeProvider, __) => Container(
+                  child: VideoScreen(id: videoYoutubeProvider.getIdVideo()),
+                  height: 200,
+                ),
               ),
             ],
           ),

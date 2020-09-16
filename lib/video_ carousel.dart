@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_exp/providers/search_youtube.provider.dart';
+import 'package:youtube_exp/providers/video_youtube.provider.dart';
 import 'package:youtube_exp/services/api_youtube.dart';
 
 import 'models/video.model.dart';
@@ -43,13 +44,46 @@ class Carousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: ListView(
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.all(10.0),
-            children: videos.map<Widget>((img) {
-              return _VideoItem(video: img); //Feature(photo);
-            }).toList()));
+    var youtubeProvider = Provider.of<SearchYoutubeProvider>(context);
+    Future<List<Video>> homeCards =
+        APIService.instance.fetchSearch(textSearch: youtubeProvider.textSearch);
+    return FutureBuilder<List<Video>>(
+      future: homeCards,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Container(
+              child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.all(10.0),
+                  children: snapshot.data.map<Widget>((img) {
+                    return _VideoItem(video: img); //Feature(photo);
+                  }).toList()));
+        } else {
+          return Container(
+              child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.all(10.0),
+                  children: <Widget>[
+                Container(
+                  height: 90,
+                  width: 120,
+                ),
+                Container(
+                  height: 90,
+                  width: 120,
+                ),
+                Container(
+                  height: 90,
+                  width: 120,
+                ),
+                Container(
+                  height: 90,
+                  width: 120,
+                )
+              ]));
+        }
+      },
+    );
   }
 }
 
@@ -59,16 +93,26 @@ class _VideoItem extends StatelessWidget {
   final Video video;
   @override
   Widget build(BuildContext context) {
+    final videoYoutubeProvider =
+        Provider.of<VideoYoutubeProvider>(context, listen: false);
+
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Card(
+            //ONTAP
+
             clipBehavior: Clip.antiAliasWithSaveLayer,
-            child: Stack(
-              children: <Widget>[
-                Image.network(video.thumbnailUrl,
-                    width: 120, height: 90, fit: BoxFit.cover),
-              ],
+            child: InkWell(
+              onTap: () {
+                videoYoutubeProvider.updateScreen(video.id);
+              },
+              child: Stack(
+                children: <Widget>[
+                  Image.network(video.thumbnailUrl,
+                      width: 120, height: 90, fit: BoxFit.cover),
+                ],
+              ),
             ),
           ),
         ]);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_exp/providers/search_youtube.provider.dart';
+import 'package:youtube_exp/providers/video_youtube.provider.dart';
 import 'package:youtube_exp/services/api_youtube.dart';
 
 class VideoSearch extends SearchDelegate<String> {
@@ -44,6 +45,8 @@ class VideoSearch extends SearchDelegate<String> {
   Widget buildSuggestions(BuildContext context) {
     var searchProvider =
         Provider.of<SearchYoutubeProvider>(context, listen: false);
+    var videoYoutubeProvider =
+        Provider.of<VideoYoutubeProvider>(context, listen: false);
 
     //final suggestionList = query.isEmpty ? recent : suggestions;
     return FutureBuilder(
