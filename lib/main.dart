@@ -90,7 +90,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Container(
               child: Column(
                 children: [
-                  Container(height: 120, child: Carousel()),
+                  Consumer<SearchYoutubeProvider>(
+                    builder: (_, videoYoutubeProvider, __) => Container(
+                      child: Container(height: 120, child: Carousel()),
+                    ),
+                  ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8.0, right: 8.0),
