@@ -60,8 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final search = Provider.of<SearchYoutubeProvider>(context);
-    final videoYoutubeProvider = Provider.of<VideoYoutubeProvider>(context);
+    final search = Provider.of<SearchYoutubeProvider>(context, listen: false);
+    final videoYoutubeProvider =
+        Provider.of<VideoYoutubeProvider>(context, listen: false);
 
     return Scaffold(
         appBar: AppBar(

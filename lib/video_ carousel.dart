@@ -44,12 +44,14 @@ class Carousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final youtubeProvider = Provider.of<SearchYoutubeProvider>(context);
+    print("🔴🔴🔴🔴Carousel 🔴🔴🔴🔴");
+    final youtubeProvider =
+        Provider.of<SearchYoutubeProvider>(context, listen: false);
     final videoYoutubeProvider =
         Provider.of<VideoYoutubeProvider>(context, listen: false);
 
-    Future<List<Video>> homeCards = APIService.instance
-        .fetchSearchFake(textSearch: youtubeProvider.textSearch);
+    Future<List<Video>> homeCards =
+        APIService.instance.fetchSearch(textSearch: youtubeProvider.textSearch);
     return FutureBuilder<List<Video>>(
       future: homeCards,
       builder: (context, snapshot) {
