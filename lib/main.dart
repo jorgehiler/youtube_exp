@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_exp/providers/search_youtube.provider.dart';
 import 'package:youtube_exp/providers/video_youtube.provider.dart';
@@ -19,13 +20,23 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final Color mainColorLighter = Color.fromRGBO(51, 51, 51, 1);
+  final Color mainColorMiddle = Color.fromRGBO(161, 203, 0, 1);
+  final Color mainColor = Color.fromRGBO(26, 188, 156, 1);
+
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+
     //SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'youtube-exp',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        highlightColor: mainColorMiddle,
+        fontFamily: 'Comfortaa',
+        appBarTheme: AppBarTheme(color: mainColorMiddle),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Search'),
@@ -43,6 +54,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   //List<Video> video =await APIService.instance.fetchSearch(textSearch: 'casa');
+  final Color mainColorLighter = Color.fromRGBO(51, 51, 51, 1);
+  final Color mainColorMiddle = Color.fromRGBO(161, 203, 0, 1);
+  final Color mainColor = Color.fromRGBO(26, 188, 156, 1);
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +65,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Buscar'),
+          title: Image.asset(
+            'assets/img/logo.png',
+            fit: BoxFit.cover,
+            height: 35,
+          ),
           actions: [
             IconButton(
-              icon: Icon(Icons.search),
+              icon: Icon(
+                Icons.search,
+                size: 32,
+              ),
               onPressed: () {
                 showSearch(context: context, delegate: VideoSearch());
               },
@@ -81,8 +102,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 key: UniqueKey(),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 5.0, right: 5),
+                                padding: const EdgeInsets.only(
+                                    left: 9.0, right: 5, top: 10),
                                 child: Container(
                                   margin: EdgeInsets.only(top: 5),
                                   child: Column(
@@ -93,20 +114,33 @@ class _MyHomePageState extends State<MyHomePage> {
                                             videoYoutubeProvider
                                                 .getVideo()
                                                 .title,
-                                            overflow: TextOverflow.ellipsis),
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: mainColorLighter,
+                                                fontSize: 18.0,
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.w600)),
                                       ),
-                                      SizedBox(height: 4),
+                                      SizedBox(height: 6),
                                       Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text(videoYoutubeProvider
-                                              .getVideo()
-                                              .publishTime)),
+                                          child: Text(
+                                            videoYoutubeProvider
+                                                .getVideo()
+                                                .publishTime,
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 14.0,
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.w400),
+                                          )),
                                     ],
                                   ),
                                 ),
                               ),
                               Divider(
-                                height: 10,
+                                height: 20,
                                 thickness: 0.7,
                                 color: Colors.grey,
                                 indent: 5,
@@ -122,8 +156,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                     child: Scrollbar(
                                       child: SingleChildScrollView(
                                           padding: EdgeInsets.only(right: 20),
-                                          child: Text(videoYoutubeProvider
-                                              .getDescription())),
+                                          child: Text(
+                                            videoYoutubeProvider
+                                                .getDescription(),
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w300),
+                                          )),
                                     )),
                               ),
                             ],

@@ -80,7 +80,7 @@ class APIService {
       new Video(
           id: 'KzTeWPkUxQs',
           title:
-              'Flutter Presentación en Español largo largo largo largo largo largo',
+              'Flutter Presentación en Español largo largo largo largo largo largo, largo, largo ,arggd ,a , largo, largo, largo',
           shortDescription:
               'Martin Aguinis presenta sobre Flutter en Español durante México Partner Day. Flutter es el kit UI portátil de Google para crear aplicaciones nativas para móvil, ...',
           thumbnailUrl: "https://i.ytimg.com/vi/KzTeWPkUxQs/default.jpg",
