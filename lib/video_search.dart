@@ -5,9 +5,6 @@ import 'package:youtube_exp/providers/video_youtube.provider.dart';
 import 'package:youtube_exp/services/api_youtube.dart';
 
 class VideoSearch extends SearchDelegate<String> {
-  final suggestions = ["Casa grande", "Casa pequeña", "Casa mediana"];
-  final recent = ["Mi casa", "Mi garaje"];
-
   VideoSearch() : super(searchFieldLabel: 'Buscar');
 
   @override
@@ -53,7 +50,6 @@ class VideoSearch extends SearchDelegate<String> {
     var videoYoutubeProvider =
         Provider.of<VideoYoutubeProvider>(context, listen: false);
 
-    //final suggestionList = query.isEmpty ? recent : suggestions;
     return FutureBuilder(
         future: APIService.instance.fetchSuggestion(query),
         builder: (context, snapshot) {

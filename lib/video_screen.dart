@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:youtube_exp/providers/video_youtube.provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoScreen extends StatefulWidget {
@@ -29,13 +27,10 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('Pasado por parametro ${widget.id}');
     return YoutubePlayer(
       controller: _controller,
       showVideoProgressIndicator: true,
-      onReady: () {
-        print('Player is ready.');
-      },
+      onReady: () {},
     );
   }
 }
