@@ -116,8 +116,14 @@ class _VideoItem extends StatelessWidget {
               },
               child: Stack(
                 children: <Widget>[
-                  Image.network(video.thumbnailUrl,
-                      width: 120, height: 90, fit: BoxFit.cover),
+                  FadeInImage(
+                      placeholder: AssetImage('assets/img/loading.png'),
+                      image: NetworkImage(
+                        video.thumbnailUrl,
+                      ),
+                      width: 120,
+                      height: 90,
+                      fit: BoxFit.cover),
                 ],
               ),
             ),

@@ -185,7 +185,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                       ],
                                     ),
                                   )
-                                : Container(child: Text('Cargando...')),
+                                : Center(
+                                    child: Container(
+                                        height: 70,
+                                        width: 70,
+                                        child: CircularProgressIndicator(
+                                          backgroundColor: mainColorMiddle,
+                                        )),
+                                  ),
                       ),
                     ),
                   ),
