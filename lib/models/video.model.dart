@@ -22,7 +22,7 @@ class Video {
       shortDescription: snippet['description'],
       thumbnailUrl: snippet['thumbnails']['high']['url'],
       channelTitle: snippet['channelTitle'],
-      publishTime: snippet['publishTime'].substring(0, 9),
+      publishTime: snippet['publishTime'].substring(0, 10),
     );
   }
 }
