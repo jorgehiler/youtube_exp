@@ -37,7 +37,12 @@ class VideoSearch extends SearchDelegate<String> {
   @override
   Widget buildResults(BuildContext context) {
     return Container(
-      child: Text(query),
+      child: Center(
+          child: Text(
+        "Este botoncito aun no funciona",
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 30),
+      )),
     );
   }
 
@@ -52,21 +57,24 @@ class VideoSearch extends SearchDelegate<String> {
     return FutureBuilder(
         future: APIService.instance.fetchSuggestion(query),
         builder: (context, snapshot) {
+          List<dynamic> suggestions;
           if (snapshot.data == null) {
             return Container();
           } else {
+            suggestions = snapshot.data;
+            suggestions.insert(0, query);
             return ListView.builder(
                 itemBuilder: (context, index) => ListTile(
                       leading: Icon(Icons.search),
-                      title: Text(snapshot.data[index]),
+                      title: Text(suggestions[index]),
                       onTap: () {
-                        query = snapshot.data[index];
+                        query = suggestions[index];
                         searchProvider.setTextSearch(query);
                         close(context, null);
                         showResults(context);
                       },
                     ),
-                itemCount: snapshot.data.length);
+                itemCount: suggestions.length);
           }
         });
   }
