@@ -3,13 +3,7 @@ import 'package:youtube_exp/models/video.model.dart';
 import 'package:youtube_exp/services/api_youtube.dart';
 
 class VideoYoutubeProvider with ChangeNotifier {
-  Video _currentVideo = Video(
-      id: '',
-      title: '',
-      shortDescription: '',
-      thumbnailUrl: '',
-      channelTitle: '',
-      publishTime: '');
+  Video _currentVideo;
   String _idVideo = "uLw3FicM6AM"; //Borrar este
   String _description = "";
 
